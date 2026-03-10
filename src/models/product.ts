@@ -1,54 +1,72 @@
+import { Table, Model, Column, DataType, PrimaryKey, AutoIncrement, CreatedAt, UpdatedAt } from "sequelize-typescript";
+import { Optional } from "sequelize";
 
-import {Table, Model, Column, CreatedAt, UpdatedAt, DataType} from 'sequelize-typescript'; 
-import {Optional} from 'sequelize'; 
+interface ProductAttributes {
+  id_empresa: number;
+  nombre_empresa: string;
+  datos_generales?: string;
+  correo_electronico: string;
+  telefono_contacto: string;
+  nombre_contacto: string;
+  tier_id: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 
-interface ProductAttributes{ 
-  id: number; 
-  title: string; 
-  description: string; 
-  price: number ; 
-  discountPercentage: number ; 
-  rating: number ; 
-  stock: number ; 
-} 
+interface ProductCreationAttributes extends Optional<ProductAttributes, "id_empresa"> {}
 
-interface ProductCreationAttributes extends Optional<ProductAttributes, 'id'>{} 
+@Table({
+  tableName: "Empresa",
+  timestamps: true
+})
+export class Product extends Model<ProductAttributes, ProductCreationAttributes> {
 
-@Table ({ 
-  tableName: "Products" 
-}) 
-export class Product extends Model<ProductAttributes, ProductCreationAttributes>{ 
+  @PrimaryKey
+  @AutoIncrement
+  @Column({
+    type: DataType.INTEGER
+  })
+  id_empresa!: number;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false
+  })
+  nombre_empresa!: string;
 
-// Here, TS infers Data Type from the JS Type 
-  // The ! means that the variable title wont be null or undefine.  
-   @Column 
-   title!: string; 
+  @Column({
+    type: DataType.STRING,
+    allowNull: true
+  })
+  datos_generales?: string;
 
-  // Here, we set the Data Type explicity 
-  // The ? means the variable can be null or undefined 
-   @Column({ 
-      type: DataType.STRING 
-   }) 
-   description?: string; 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false
+  })
+  correo_electronico!: string;
 
-   @Column 
-   price!: number; 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false
+  })
+  telefono_contacto!: string;
 
-   @Column 
-   discountPercentage!: number; 
+  @Column({
+    type: DataType.STRING,
+    allowNull: false
+  })
+  nombre_contacto!: string;
 
-   @Column 
-   rating!: number; 
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false
+  })
+  tier_id!: number;
 
-   @Column 
-   stock!: number; 
+  @CreatedAt
+  createdAt!: Date;
 
-   @CreatedAt 
-   @Column 
-   createdAt!: Date; 
-
-   @UpdatedAt 
-   @Column 
-   updatedAt!: Date; 
-} 
+  @UpdatedAt
+  updatedAt!: Date;
+}
