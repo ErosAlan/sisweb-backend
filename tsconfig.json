@@ -4,12 +4,16 @@
     // File Layout
     "rootDir": ".",
     "outDir": "dist",
+      
+  "experimentalDecorators": true, 
+  "emitDecoratorMetadata": true,
+
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "target": "es2020",
+    "target": "es6",
     "types": ["node"],
     // For nodejs:
     "lib": ["esnext"],
