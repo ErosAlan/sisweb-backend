@@ -1,6 +1,6 @@
-
 import { Sequelize } from "sequelize-typescript"; 
-import { Product } from "../models/product"; 
+import { Empresa } from "../models/empresa"; 
+import { Tier } from "../models/tier";
 
 const connection = new Sequelize({ 
 database: 'sisweb_db', 
@@ -10,7 +10,8 @@ password: 'HDK#$%Ljkwerff.89',
 host: 'localhost',
 storage: ':memory:', 
 models: [ 
-Product 
+Empresa,
+Tier
 ] 
 }); 
 

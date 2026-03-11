@@ -1,7 +1,9 @@
 import { Table, Model, Column, DataType, PrimaryKey, AutoIncrement, CreatedAt, UpdatedAt } from "sequelize-typescript";
 import { Optional } from "sequelize";
+import { ForeignKey, BelongsTo } from "sequelize-typescript";
+import { Tier } from "./tier";
 
-interface ProductAttributes {
+interface EmpresaAttributes {
   id_empresa: number;
   nombre_empresa: string;
   datos_generales?: string;
@@ -13,13 +15,13 @@ interface ProductAttributes {
   updatedAt?: Date;
 }
 
-interface ProductCreationAttributes extends Optional<ProductAttributes, "id_empresa"> {}
+interface EmpresaCreationAttributes extends Optional<EmpresaAttributes, "id_empresa"> {}
 
 @Table({
   tableName: "Empresa",
   timestamps: true
 })
-export class Product extends Model<ProductAttributes, ProductCreationAttributes> {
+export class Empresa extends Model<EmpresaAttributes, EmpresaCreationAttributes> {
 
   @PrimaryKey
   @AutoIncrement
@@ -58,11 +60,15 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
   })
   nombre_contacto!: string;
 
+  @ForeignKey(() => Tier)
   @Column({
     type: DataType.INTEGER,
     allowNull: false
   })
   tier_id!: number;
+  
+  @BelongsTo(() => Tier)
+  tier!: Tier;
 
   @CreatedAt
   createdAt!: Date;
